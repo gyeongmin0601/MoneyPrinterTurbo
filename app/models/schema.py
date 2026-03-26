@@ -458,3 +458,75 @@ class TopicSuggestionResponse(BaseResponse):
                 },
             },
         }
+
+
+######################################################################################################
+# Korean Script Models
+######################################################################################################
+
+
+class KoreanScriptRequest(BaseModel):
+    video_subject: str
+    script_length: str = "medium"  # short, medium, long
+    speech_style: str = "friendly"  # formal, friendly, casual
+    niche: Optional[str] = None
+    target_audience: Optional[str] = None
+    keywords: Optional[List[str]] = None
+    include_visual_cues: bool = True
+
+
+class ScriptFromTopicRequest(BaseModel):
+    title: str = ""
+    title_ko: str = ""
+    description: str = ""
+    description_ko: str = ""
+    keywords: List[str] = []
+    script_length: str = "medium"
+    speech_style: str = "friendly"
+
+
+class ScriptReviewRequest(BaseModel):
+    script_text: str
+
+
+class KoreanScriptResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "hook": "여러분, 월급의 절반이 사라지는 이유 아시나요?",
+                    "context": "많은 직장인들이 월급날만 기다리지만...",
+                    "sections": [
+                        {
+                            "content": "첫 번째로 알아볼 것은...",
+                            "visual_cue": "person checking bank app on phone",
+                        }
+                    ],
+                    "full_script": "여러분, 월급의 절반이 사라지는 이유 아시나요? ...",
+                    "estimated_duration_seconds": 360,
+                    "search_terms": ["salary saving tips", "money management"],
+                },
+            },
+        }
+
+
+class ScriptReviewResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "hook_strength": 8,
+                    "information_density": 7,
+                    "engagement": 6,
+                    "pacing": 8,
+                    "retention": 7,
+                    "overall_score": 7.2,
+                    "improvements": ["Add a stronger call-to-action"],
+                    "improvements_ko": ["더 강력한 행동 유도 문구 추가"],
+                },
+            },
+        }
