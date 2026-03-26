@@ -27,6 +27,10 @@ node_modules
 venv/
 .venv
 
+# OAuth tokens and secrets (NEVER commit)
+youtube_oauth_token.json
+client_secrets.json
+
 # Debug and test files
 CLAUDE.md
 debug/
