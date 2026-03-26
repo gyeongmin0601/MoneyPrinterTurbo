@@ -9,7 +9,7 @@ Resources:
 
 from fastapi import APIRouter
 
-from app.controllers.v1 import llm, script, trend, video
+from app.controllers.v1 import korean, llm, script, trend, video
 
 root_api_router = APIRouter()
 # v1
@@ -17,3 +17,4 @@ root_api_router.include_router(video.router)
 root_api_router.include_router(llm.router)
 root_api_router.include_router(trend.router)
 root_api_router.include_router(script.router)
+root_api_router.include_router(korean.router)
