@@ -332,3 +332,129 @@ class VideoMaterialUploadResponse(BaseResponse):
                 },
             },
         }
+
+
+######################################################################################################
+# Trend Analysis Models
+######################################################################################################
+
+
+class TrendingVideo(BaseModel):
+    video_id: str = ""
+    title: str = ""
+    channel_title: str = ""
+    published_at: str = ""
+    view_count: int = 0
+    like_count: int = 0
+    comment_count: int = 0
+    category_id: str = ""
+    tags: List[str] = []
+    thumbnail_url: str = ""
+
+
+class KeywordMetrics(BaseModel):
+    keyword: str = ""
+    total_results: int = 0
+    avg_view_count: float = 0.0
+    avg_like_count: float = 0.0
+    avg_comment_count: float = 0.0
+    engagement_rate: float = 0.0
+    top_videos: List[TrendingVideo] = []
+    competition_level: str = "medium"
+
+
+class SuggestedTopic(BaseModel):
+    title: str = ""
+    title_ko: str = ""
+    description: str = ""
+    description_ko: str = ""
+    keywords: List[str] = []
+    demand_score: float = 0.0
+    competition_score: float = 0.0
+    opportunity_score: float = 0.0
+    reasoning: str = ""
+    reasoning_ko: str = ""
+
+
+class TrendingRequest(BaseModel):
+    region_code: str = "KR"
+    category_id: Optional[str] = None
+    max_results: int = 20
+
+
+class KeywordAnalysisRequest(BaseModel):
+    keyword: str
+    region_code: str = "KR"
+    language: str = "ko"
+    max_results: int = 10
+    order: str = "relevance"
+
+
+class TopicSuggestionRequest(BaseModel):
+    region_code: str = "KR"
+    category_id: Optional[str] = None
+    language: str = "ko"
+    num_suggestions: int = 5
+    niche: Optional[str] = None
+
+
+class TrendingResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "videos": [
+                        {
+                            "video_id": "abc123",
+                            "title": "Sample Trending Video",
+                            "channel_title": "SampleChannel",
+                            "view_count": 1500000,
+                        }
+                    ],
+                    "region_code": "KR",
+                    "fetched_at": "2026-03-26T12:00:00",
+                },
+            },
+        }
+
+
+class KeywordAnalysisResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "keyword": "python tutorial",
+                    "total_results": 5000000,
+                    "avg_view_count": 150000.0,
+                    "engagement_rate": 3.5,
+                    "competition_level": "high",
+                },
+            },
+        }
+
+
+class TopicSuggestionResponse(BaseResponse):
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "status": 200,
+                "message": "success",
+                "data": {
+                    "topics": [
+                        {
+                            "title": "Budget Travel Tips in Korea",
+                            "title_ko": "한국 알뜰 여행 팁",
+                            "demand_score": 85.0,
+                            "competition_score": 40.0,
+                            "opportunity_score": 57.0,
+                        }
+                    ],
+                    "analysis_summary": "Based on current trends...",
+                    "analysis_summary_ko": "현재 트렌드를 기반으로...",
+                },
+            },
+        }
